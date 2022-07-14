@@ -33,13 +33,25 @@ async function searchFile() {
   var obj = {
     data: []
   };
+  var pageToken = null;
+
+  var res = drive.files.list({
+    q: "mimeType = 'application/vnd.google-apps.folder'",
+    maxResults: 1000,
+    pageSize: 1000,
+    pageToken: pageToken,
+  });
+  pageToken = res.nextPageToken;
+  while(pageToken!=null){
   try {
-    const res = await drive.files.list({
+    res = await drive.files.list({
       // q: "mimeType='image/png'", //use this to filter using mimetypes
       q: "mimeType = 'application/vnd.google-apps.folder'",
       fields: "nextPageToken, files(id, name)",
       spaces: "drive",
       maxResults: 1000,
+      pageSize: 1000,
+    pageToken: pageToken,a
     });
     Array.prototype.push.apply(files, res.files);
     res.data.files.forEach(function (file) {
@@ -51,9 +63,11 @@ async function searchFile() {
     var json = JSON.stringify(obj);
     fs.writeFileSync("data.json", json, "utf8");
     // console.log(data);
+    pageToken = res.nextPageToken;
     return res.data.files;
   } catch (err) {
     throw err;
   }
+}
 }
 exports.searchFile = searchFile;
