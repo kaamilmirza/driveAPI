@@ -5,14 +5,17 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.cjs"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@babel/core": "^7.18.6",
+    "dotenv": "^16.0.2",
     "express": "^4.18.1",
     "google-auth-library": "^0.12.0",
-    "googleapis": "^105.0.0"
+    "googleapis": "^105.0.0",
+    "nodemon": "^2.0.19"
   }
 }
